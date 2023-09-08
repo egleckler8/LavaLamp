@@ -1,6 +1,5 @@
-# Here are 10 samples, varying in paramters and image size, that showcase the type of art this program can produce.
+# Here are 6 samples, varying in paramters, that showcase the type of art this program can produce.
 
 # These animations were produced over the course of the program's development, and may have been generated using different procedures as I edited my code, but the end results are all representative
 
-print("still learning github")
-
+# I tried to include some larger GIFs (like 800x800), but they were too large of a file size to upload...
