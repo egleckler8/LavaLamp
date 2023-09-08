@@ -9,7 +9,7 @@ IF YOU RUN THIS PROGRAM:
 Be warned, the image generation process can require many, many iterations. If you...
 - Increase `img_size`
 - Increase `total_frames`
-- Increase `octaves`, `persistence`, or `lacunarity` parameter
+- Increase the `octaves`, `persistence`, or `lacunarity` parameter
 - Iteratively generate animations (e.g. `for i in range(500): createGif()`
   
 You could experience wait times upwards of five minutes as your GIF generates... You could generate individual GIFs of size 50+ MB...
