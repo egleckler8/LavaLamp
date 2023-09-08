@@ -261,6 +261,7 @@ class LampGen():
           print(fp)
 
           try:
+               # Thanks to ChatGPT for teaching me how to use Pillow to save a list of images as a gif
                frame_files[0].save(fp, save_all=True, append_images=frame_files[1:], duration=100, loop=0) # 0 means infinite loop
                print(f"******************************************************************************************************\n  Image successfully generated; it is now located at:\n  {fp}\n******************************************************************************************************")
           except Exception as e:
