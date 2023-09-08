@@ -1,9 +1,20 @@
 # LavaLamp
 Psychedelic, procedurally generative art with Perlin noise. Generating an artistic product using only randomness and math was the goal of the project.
 
-Look at some of the sample's and you'll quickly understand the name `LavaLamp`!
+Look at some of the sample's in `art-samples` and you'll quickly understand the name `LavaLamp`!
 
 Implements `noise.pnoise`, `Pillow`, and `numpy`, notably.
+
+IF YOU RUN THIS PROGRAM:
+Be warned, the image generation process can require many, many iterations. If you...
+- Increase `img_size`
+- Increase `total_frames`
+- Increase `octaves`, `persistence`, or `lacunarity` parameter
+- Iteratively generate animations (e.g. `for i in range(500): createGif()`
+  
+You could experience wait times upwards of five minutes as your GIF generates... You could generate individual GIFs of size 50+ MB...
+
+My MacBook has pretty good specs and an 800x800 animation still takes quite a while to generate for me! Optimizing the processes this program takes is always a work in progress, but python is sometimes just not the fastest. My intention was only to generate small-sized images, but I designed the program to be scalable to any-size images.
 
 ## TL;DR
 Program pans through 3D Perlin noise, compiling many 2D slices into a list of frames that is saved as a GIF animation.
