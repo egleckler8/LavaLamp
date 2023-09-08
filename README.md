@@ -118,3 +118,13 @@ In the GUI, I'm working on adding:
 6. Checkboxes for enabling/disabling different features like color swirl, noise swirl, etc.
 7. Multiple "design menus." e.g. "Basic," "Advanced," etc. Give users the option between being possibly overwhelmed with controlling all paramters, and having the option to control only the few, most influential ones.
 8. Preview popup of image before saving to computer?
+
+### 2 - Predicting image generation time with machine learning
+
+Starting another thread that starts a timer, then exporting the `img_size`, `total_frames`, image parameters, and time of generation to a dataset. It'd be easy to use a machine learning model to try to predict the generation time!!
+
+### 3 - Creating a program to compress the image
+
+Some of these images are too large in size--I couldn't upload some of them to github because they were >25 MB!! So, it would be useful to write a script that scales down the images. 
+
+For example, a compression algorithm that reduces file size by half could take the average RGB values of a square of 4 adjacent pixels and map the average value to one pixel on the new, compressed animation. At the moment, I'm not yet sure how to efficiently do this for every frame!
