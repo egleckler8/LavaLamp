@@ -1,8 +1,43 @@
 from PIL import Image
-import numpy as np, noise, random
+import numpy as np, noise
+from random import random, randint
 
 # The image is a square, so this is the size of each side in pixels. Feel free to change!
 # Bigger is cooler, but remember that it might take a LOT longer to process... I still need to work on optimizing this program
+
+def randParams():
+     
+     '''  Generates a list of random parameters
+          
+          p[0] = scale -  How "zoomed in" the noise is. RANGE = (10.0, 210.0), MU ≅ 110.0
+
+          p[1] = octaves - how many overtones are added to smooth the noise. RANGE = (1, 11), MU ≅ 6.00
+
+          p[2] = persistence - the relative amplitude of each next octave. RANGE = (0, 0.95), MU ≅ 0.475
+
+          p[3] = lacunarity - the relative frequency of each next octave. RANGE = (1.0, 4.0), MU ≅  2.50
+
+          p[4] = z value - just a randomization factor... basically where it starts in the 3D field. RANGE = (0.0, 1.0), MU ≅ 0.50
+
+          p[5] = strength - how powerful the noise field is. RANGE = (0.0, 1.0), MU ≅ 0.50 '''
+     
+     scale = round(10 + 200 * random(), 4)
+     octaves = round(randint(1, 11), 4)
+     persistence = round(random(), 4)
+     lacunarity = 1 + 3 * round(random(), 4)
+     z = round(random(), 4)
+     strength=round(random(), 4)
+
+
+     #scale = 110 # for testing purposes
+     #octaves = 6 # for testing purposes
+     #persistence = 0.5 # for testing purposes
+     #lacunarity = 2.50 # for testing purposes
+     #z = 0.5 # for testing purposes
+     #strength = 0.5 # for testing purposes
+
+
+     return [scale, octaves, persistence, lacunarity, z, strength]
 
 
 class LampGen():
@@ -91,88 +126,50 @@ class LampGen():
                swirl_noise[x] = amplitude * noise_value
 
           return swirl_noise
+     
 
-
-     def randSeed():
-          '''  A Random 3-item list of 17-digit numbers, the first 16 digits of which are used. 
-               It must have a range that extends to 17-digit so that the second digit can vary freely between 0 and 9.
-               In other words, we generate a list of numbers where 16 digits vary 1-9 '''
-          
-          seed = []
-          for i in range(3):
-               seed.append(random.randint(10000000000000000, 19999999999999999))
-          
-          return seed
-
-
-     def generateParams(self, seed):
-          '''   This method returns a paramter list for an image using a seed as an input.
-               
-                    IMPORTANT: THE SEED SHOULD BE A 17-DIGIT NUMBER FOR THIS TO WORK AS INTENDED! 
-                    This program will mostly just use the above randseed, but if a "user choice" seed feature is ever implemented,
-                    We'll need to code in a workaround to getting a seed like "1234" or "dog." Just like Minecraft... :)
-
-                    p[0] = scale -  How "zoomed in" the noise is. RANGE = (10.0, 210.0), MU ≅ 110.0
-
-                    p[1] = octaves - how many overtones are added to smooth the noise. RANGE = (1, 11), MU ≅ 6.00
-
-                    p[2] = persistence - the relative amplitude of each next octave. RANGE = (0, 0.95), MU ≅ 0.475
-
-                    p[3] = lacunarity - the relative frequency of each next octave. RANGE = (1.0, 4.0), MU ≅  2.50
-
-                    p[4] = z value - just a randomization factor... basically where it starts in the 3D field. RANGE = (0.0, 1.0), MU ≅ 0.50
-
-                    p[5] = strength - how powerful the noise field is. RANGE = (0.0, 1.0), MU ≅ 0.50 '''
-
-          # uses the last three digits
-          scale = 10 + 200 * (seed % (10 ** 3)) / (10.0 ** 3) # RANGE = (10.0, 210.0), MU ≅ 110.0
-          #scale = 110 # for testing purposes
-
-          # uses the fourth digit as an int, so the range of octaves is 3-12. Keeping octaes decently low reduces processing time
-          octaves = 1 + (seed % (10 ** 4)) / (10.0 ** 3) # RANGE = (1, 11), MU ≅ 6.00
-          #octaves = 6 # for testing purposes
-
-          # uses the last 7 digits to create a number between 0 and 0.9. The last four digits are repeats, but this doesn't matter much because their decimal place is insignificant
-          persistence = (seed % (10 ** 7)) / (10.0 ** 7) # RANGE = (0, 1), MU ≅ 0.5
-          #persistence = 0.5 # for testing purposes
-
-          # uses the last 10 digits as a number between 0 and 1
-          lacunarity = 1 + 3 * (seed % (10 ** 10)) / (10.0 ** 10) # RANGE = (1.0, 4.0), MU ≅  2.50
-          #lacunarity = 2.50 # for testing purposes
-
-          # uses all the digits, but mainly the 11th & 12th, as a number between 0 and 1
-          z =  (seed % (10 ** 12)) / (10.0 ** 12) # RANGE = (0.0, 1.0), MU ≅ 0.50
-          #z = 0.5 # for testing purposes
-
-          # uses the first three digits as a number between 0 and 1
-          strength = (seed % (10 ** 15)) / (10.0 ** 15) # RANGE = (0.0, 1.0), MU ≅ 0.50
-          #strength = 0.5 # for testing purposes
-          
-          # This is important, since the noise module will take only ints for the octaves value
-          # In createSample(), the xyz coordinates must be ints, as they represent pixels, and they are divided by scale, so scale must be int
-          scale = int(scale)
-          octaves = int(octaves)
-
-          return [scale, octaves, persistence, lacunarity, z, strength]
-
-
-     def createGIF(self, s=randSeed(), filepath=""):
+     def createGIF(self, filepath="", 
+                   R_strength=0.5, 
+                   B_strength=0.5, 
+                   G_strength=0.5, ):
           '''  Creates trippy gif and saves it. 
                By default, the gif is generated using a random seed and saved to the working directory
-               Also by default, the randSeed() method is called to generate a seed. Eventually, I hope to write
-               a function to be called below that converts any input seed into the (17dig, 17dig, 17dig) mess we currently require...
-               Additionally, I'd love to find a way to make the seed super compact but retain the 
-               unfathomable randomness of 3 very large random numbers.
+               Also by default, the randParams method is called 3 times to generate a "seed." Eventually, I hope to write
+               a function to be called below that converts any input seed into a list of 3 parameters
+               Additionally, I'd love to find a way to make the seed super compact but retain unfathomable randomness
            
                This is the primary method that will be called by users of the LampGen class.
                It's the only one we need to ever look at outside of this class!!! Yay!
                Makes it easy for anyone to call the method and make their own generative art.
                '''
           
-          # Right here is where some future "seed converter" method would go.
+          # Right here is where some future "seed converter" method would go instead of params = seed
           # I'd write seed = convertSeed(s) and it'd gurantee the seed works
           # no matter what the user inputs.
-          seed = s
+          # IT MUST have the output of a list of three parameter lists (one for each R, G, B)
+          # So that the line below that makes the params list can turn the seed into params
+          # Currently, s is a 3 term list anyway so... this seems redundant
+          # But eventually I'll want s to be a 10-digit number or something
+          # Then the future method that will be here will 
+          # 1. take seed 
+          # 2. and turn it into the 3 term list (def new method?)
+          # 3. store it in params          
+
+          # Uhhhh yeah... This is the inelegant method I've come up with so that we can have
+          # Default parameters be random, and then kinda override it a little if we want
+          # Since I stared developing the GUI with only (R, G, B)_strength, I thought this would be
+          # a good start to figuring out this problem while I test the GUI
+
+          seed = [randParams(), randParams(), randParams()]
+          seed[0][5] = R_strength
+          seed[1][5] = G_strength
+          seed[2][5] = B_strength
+
+          # Using the seeds, generate the paramters for each color noise layer
+          # Basically, the first term in the seed list goes to Red
+          # Second goes to Blue, third to Green
+          # And from those seeds we generate the params for the noise field for each color. Phew!
+          params = seed
 
           # Create a new blank image with a specified size and color mode
           image = Image.new("RGB", (self.img_size, self.img_size), "black")
@@ -183,15 +180,9 @@ class LampGen():
           # The value at each (width, height) is set by the noise sample we'll create
           map = np.array(image)
 
-          # Using the seeds, generate the paramters for each color noise layer
-          # Basically, the first term in the seed list goes to Red
-          # Second goes to Blue, third to Green
-          # And from those seeds we generate the params for the noise field for each color. Phew!
-          params = [self.generateParams(seed[0]), self.generateParams(seed[1]), self.generateParams(seed[2])]
-
           # just for references in terminal
-          print("Seed: " + str(seed))
-          print("Parameters: " + str(params))
+          #print("Seed: " + str(seed))
+          #print("Parameters: " + str(params))
 
           # This is where the image files for each frame will be opened and stored to as they are generated
           frame_files = []

@@ -37,10 +37,6 @@ def generateArt(event=None):
     green_strength = green_scale.get()
     blue_strength = blue_scale.get()
 
-    print(red_strength, blue_strength, green_strength)
-
-    # Shut down all the widgets to preserve order during the generation just in case
-    
     #fp = filepath_entry.get()
     fp = "/Users/eli/Desktop/noise-art/imgs/"
 
@@ -57,13 +53,11 @@ def generateArt(event=None):
 
 # Create all the widgets
 red_scale = tk.Scale(panel, label='R', orient='vertical', from_=1.0, to=0.01, resolution=0.01, command=updateVars)
-blue_scale = tk.Scale(panel, label='G', orient='vertical', from_=1.0, to=0.01, resolution=0.01, command=updateVars)
-green_scale = tk.Scale(panel, label='B', orient='vertical', from_=1.0, to=0.01, resolution=0.01, command=updateVars)
+green_scale = tk.Scale(panel, label='G', orient='vertical', from_=1.0, to=0.01, resolution=0.01, command=updateVars)
+blue_scale = tk.Scale(panel, label='B', orient='vertical', from_=1.0, to=0.01, resolution=0.01, command=updateVars)
 color = tk.Label(panel, width=35, height=1, bg='white')
 goButton = tk.Button(panel, width=8, height=8, text="Generate art", fg="white", command=generateArt)
 filepath_entry = tk.Entry(panel, width=35, textvariable='Enter filepath to save GIF to')
-
-# This is used in goButton to disable/re-enable all widgets
 
 
 
@@ -71,8 +65,8 @@ filepath_entry = tk.Entry(panel, width=35, textvariable='Enter filepath to save 
 filepath_entry.pack(side='bottom')
 color.pack(side='top')
 red_scale.pack(side='left')
-blue_scale.pack(side='left')
 green_scale.pack(side='left')
+blue_scale.pack(side='left')
 goButton.pack(side='bottom')
 
 panel.pack()
