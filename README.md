@@ -1,7 +1,7 @@
 # LavaLamp
 Psychedelic, procedurally generative art with Perlin noise. Generating an artistic product using only randomness and math was the goal of the project.
 
-Look at some of the sample's in `art-samples` and you'll quickly understand the name `LavaLamp`!
+Look at some of the samples in the `art-samples` folder and you'll quickly understand the name `LavaLamp`!
 
 Implements `noise.pnoise`, `Pillow`, and `numpy`, notably.
 
