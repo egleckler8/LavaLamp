@@ -133,7 +133,6 @@ class LampGen:
     @staticmethod
     def rand_seed():
         """
-
         A Random 3-item list of 17-digit numbers, the first 16 digits of which are used.
         It must have a range that extends to 17-digit so that the second digit can vary freely between 0 and 9.
         In other words, we generate a list of numbers where 16 digits vary 1-9

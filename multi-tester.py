@@ -11,12 +11,12 @@ import lavalamp
 # 1000x1000, maybe starting from 100x100, in increments of 10
 SAVE_PATH = "../lavalamp-samples"
 
-for size_incr in range(350, 1001, 10):
+for size_incr in range(350, 1001, 25):
 
     # For each size we want to create 10 samples...
     g = lavalamp.LampGen(size=(size_incr, size_incr))
 
-    for sample_cnt in range(10):
+    for sample_cnt in range(3):
         json_data = g.create_gif(filepath=SAVE_PATH)
 
         with open('data.txt', 'a') as f:
