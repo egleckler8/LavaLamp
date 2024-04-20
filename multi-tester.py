@@ -1,7 +1,7 @@
-'''
+"""
 tests creation of many lavalamps
 and charts the data in a csv file
-'''
+"""
 
 import lavalamp
 
@@ -11,13 +11,13 @@ import lavalamp
 # 1000x1000, maybe starting from 100x100, in increments of 10
 SAVE_PATH = "../lavalamp-samples"
 
-for size_incr in range(350,1001,10):
+for size_incr in range(350, 1001, 10):
 
     # For each size we want to create 10 samples...
-    g = lavalamp.LampGen(size=size_incr)
+    g = lavalamp.LampGen(size=(size_incr, size_incr))
 
     for sample_cnt in range(10):
-        json_data = g.createGIF(filepath=SAVE_PATH)
+        json_data = g.create_gif(filepath=SAVE_PATH)
 
         with open('data.txt', 'a') as f:
             f.write(json_data)

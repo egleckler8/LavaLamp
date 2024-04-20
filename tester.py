@@ -1,13 +1,13 @@
-'''
-tests creation of one lavalamop
-'''
-import json
+"""
+tests creation of one lavalamp
+"""
+# import json
 
 from lavalamp import LampGen
 
 
-g = LampGen()
-response = g.createGIF(filepath="/Users/eli/Desktop/stuff")
+g = LampGen(size=(3456, 2234))
+response = g.create_gif(filepath="/Users/eli/Desktop/stuff")
 
 print(response)
 
